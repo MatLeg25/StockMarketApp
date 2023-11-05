@@ -9,6 +9,7 @@ import kotlinx.coroutines.withContext
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.time.LocalDate
+import java.util.Calendar
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -16,6 +17,14 @@ import javax.inject.Singleton
 class IntradayInfoParser @Inject constructor(): CsvParser<IntradayInfo> {
     override suspend fun parse(stream: InputStream): List<IntradayInfo> {
         val csvReader = CSVReader(InputStreamReader(stream))
+
+        //for weekend days there is no data from market
+        val previousWorkingDayDelta = when (Calendar.getInstance().get(Calendar.DAY_OF_WEEK)) {
+            Calendar.SUNDAY -> 2
+            Calendar.MONDAY -> 3
+            else -> 1
+        }
+
         return withContext(Dispatchers.IO) {
             csvReader
                 .readAll()
@@ -26,8 +35,8 @@ class IntradayInfoParser @Inject constructor(): CsvParser<IntradayInfo> {
                     val dto = IntradayInfoDto(timestamp, close.toDouble())
                     dto.toIntradayInfo()
                 }
-                //filter only date from previous day (to be sure that all date(for each hour) available)
-                .filter { it.date.dayOfMonth == LocalDate.now().minusDays(3).dayOfMonth } //todo update - if previous day was Sunday no data from market
+                //filter only date from previous working day (to be sure that all date(for each hour) available)
+                .filter { it.date.dayOfMonth == LocalDate.now().minusDays(previousWorkingDayDelta.toLong()).dayOfMonth }
                 .sortedBy { it.date.hour }
                 .also {
                     csvReader.close()
