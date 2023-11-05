@@ -8,7 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.InputStream
 import java.io.InputStreamReader
-import java.time.LocalDateTime
+import java.time.LocalDate
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -27,7 +27,7 @@ class IntradayInfoParser @Inject constructor(): CsvParser<IntradayInfo> {
                     dto.toIntradayInfo()
                 }
                 //filter only date from previous day (to be sure that all date(for each hour) available)
-                .filter { it.date.dayOfMonth == LocalDateTime.now().minusDays(1).dayOfMonth }
+                .filter { it.date.dayOfMonth == LocalDate.now().minusDays(3).dayOfMonth } //todo update - if previous day was Sunday no data from market
                 .sortedBy { it.date.hour }
                 .also {
                     csvReader.close()

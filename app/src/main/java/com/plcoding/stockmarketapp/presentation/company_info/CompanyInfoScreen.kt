@@ -28,12 +28,12 @@ import com.ramcosta.composedestinations.annotation.Destination
 @Composable
 @Destination
 fun CompanyInfoScreen(
-    symbol: String,
+    symbol: String, //required by navigation lib
     viewModel: CompanyInfoViewModel = hiltViewModel(),
 ) {
     val state = viewModel.state
 
-    if (state.error != null) {
+    if (state.error == null) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -86,7 +86,7 @@ fun CompanyInfoScreen(
                 if (state.stockInfos.isNotEmpty()) {
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(text = "Market summary")
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(32.dp))
                     StockChart(
                         infos = state.stockInfos,
                         modifier = Modifier
