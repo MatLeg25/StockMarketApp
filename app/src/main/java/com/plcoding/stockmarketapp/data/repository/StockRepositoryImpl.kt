@@ -1,9 +1,9 @@
 package com.plcoding.stockmarketapp.data.repository
 
 import com.plcoding.stockmarketapp.data.csv.CsvParser
-import com.plcoding.stockmarketapp.data.csv.IntradayInfoParser
 import com.plcoding.stockmarketapp.data.local.StockDatabase
 import com.plcoding.stockmarketapp.data.mapper.toCompanyInfo
+import com.plcoding.stockmarketapp.data.mapper.toCompanyInfoEntity
 import com.plcoding.stockmarketapp.data.mapper.toCompanyListing
 import com.plcoding.stockmarketapp.data.mapper.toCompanyListingEntity
 import com.plcoding.stockmarketapp.data.remote.StockApi
@@ -90,8 +90,15 @@ class StockRepositoryImpl @Inject constructor(
 
     override suspend fun getCompanyInfo(symbol: String): Resource<CompanyInfo> {
         return try {
-            val results = api.getCompanyInfo(symbol)
-            Resource.Success(results.toCompanyInfo())
+            val localCompanyInfo = dao.searchCompanyInfo(symbol)
+            return if (localCompanyInfo != null) {
+                Resource.Success(localCompanyInfo.toCompanyInfo())
+            } else {
+                val remoteCompanyInfo = api.getCompanyInfo(symbol)
+                dao.insertCompanyInfo(remoteCompanyInfo.toCompanyInfoEntity())
+                val result = dao.searchCompanyInfo(symbol)
+                Resource.Success(result?.toCompanyInfo())
+            }
         } catch (e: IOException) {
             e.printStackTrace()
             Resource.Error("Couldn't load CompanyInfo")

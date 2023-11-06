@@ -1,5 +1,6 @@
 package com.plcoding.stockmarketapp.data.mapper
 
+import com.plcoding.stockmarketapp.data.local.CompanyInfoEntity
 import com.plcoding.stockmarketapp.data.local.CompanyListingEntity
 import com.plcoding.stockmarketapp.data.remote.dto.CompanyInfoDto
 import com.plcoding.stockmarketapp.domain.model.CompanyInfo
@@ -26,5 +27,22 @@ fun CompanyInfoDto.toCompanyInfo(): CompanyInfo =
             name = name ?: "",
             country = country ?: "",
             industry = industry ?: "",
-
         )
+
+fun CompanyInfoEntity.toCompanyInfo(): CompanyInfo =
+    CompanyInfo(
+        symbol = symbol,
+        description = description,
+        name = name,
+        country = country,
+        industry = industry
+    )
+
+fun CompanyInfoDto.toCompanyInfoEntity(): CompanyInfoEntity =
+    CompanyInfoEntity(
+        symbol = symbol ?: "",
+        description = description ?: "",
+        name = name ?: "",
+        country = country ?: "",
+        industry = industry ?: ""
+    )

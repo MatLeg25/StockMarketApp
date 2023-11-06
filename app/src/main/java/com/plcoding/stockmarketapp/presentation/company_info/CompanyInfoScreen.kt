@@ -1,6 +1,7 @@
 package com.plcoding.stockmarketapp.presentation.company_info
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -13,6 +14,7 @@ import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -33,7 +35,7 @@ fun CompanyInfoScreen(
 ) {
     val state = viewModel.state
 
-    if (state.error == null) {
+    if (state.errorCompanyInfo == null) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -83,7 +85,29 @@ fun CompanyInfoScreen(
                     fontSize = 12.sp,
                     modifier = Modifier.fillMaxWidth(),
                 )
-                if (state.stockInfos.isNotEmpty()) {
+                if (state.errorIntradayInfo != null) {
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                        Text(
+                            text = "Cannot fetch intraday info.",
+                            fontSize = 14.sp,
+                            color = MaterialTheme.colors.error,
+                            fontStyle = FontStyle.Italic,
+                            fontWeight = FontWeight.Light
+                        )
+                        Text(
+                            text = "Please try again later.",
+                            fontSize = 14.sp,
+                            color = MaterialTheme.colors.error,
+                            fontStyle = FontStyle.Italic,
+                            fontWeight = FontWeight.Light
+                        )
+                    }
+                }
+                else if (state.stockInfos.isNotEmpty()) {
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(text = "Market summary")
                     Spacer(modifier = Modifier.height(32.dp))
@@ -104,9 +128,9 @@ fun CompanyInfoScreen(
     ) {
         if (state.isLoading) {
             CircularProgressIndicator()
-        } else if (state.error != null) {
+        } else if (state.errorCompanyInfo != null) {
             Text(
-                text = state.error,
+                text = state.errorCompanyInfo,
                 color = MaterialTheme.colors.error
             )
         }

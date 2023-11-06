@@ -8,7 +8,7 @@ import retrofit2.http.Query
 interface StockApi {
 
     companion object {
-        const val API_KEY = "3GV5CQC45U4IUZF8"
+        const val API_KEY = "3GV5CQC45U4IUZF8" //4TN5QM2V8J2IJQ98
         const val BASE_URL = "https://alphavantage.co"
     }
 

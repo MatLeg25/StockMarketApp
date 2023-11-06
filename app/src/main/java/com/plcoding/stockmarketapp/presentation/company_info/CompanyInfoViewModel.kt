@@ -33,13 +33,13 @@ class CompanyInfoViewModel @Inject constructor(
                     state = state.copy(
                         company = result.data,
                         isLoading = false,
-                        error = null
+                        errorCompanyInfo = null
                     )
                 }
                 is Resource.Error -> {
                     state = state.copy(
                         isLoading = false,
-                        error = result.message,
+                        errorCompanyInfo = result.message,
                         company = null
                     )
                 }
@@ -50,13 +50,13 @@ class CompanyInfoViewModel @Inject constructor(
                     state = state.copy(
                         stockInfos = result.data ?: emptyList(),
                         isLoading = false,
-                        error = null
+                        errorIntradayInfo = null
                     )
                 }
                 is Resource.Error -> {
                     state = state.copy(
                         isLoading = false,
-                        error = result.message,
+                        errorIntradayInfo = result.message,
                         stockInfos = emptyList()
                     )
                 }
