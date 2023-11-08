@@ -55,13 +55,26 @@ class CompanyListingsViewModel @Inject constructor(
                         is Resource.Success -> {
                             result.data?.let { listings ->
                                 state = state.copy(
-                                    companies = listings
+                                    companies = listings,
+                                    error = null,
                                 )
                             }
                         }
-                        is Resource.Error -> Unit
+                        is Resource.Error -> {
+                            //nothing to display (fetch failed, cache empty)
+                            if (state.companies.isEmpty()) {
+                                state = state.copy(
+                                    error = result.message,
+                                    isLoading = false
+                                )
+
+                            }
+                        }
                         is Resource.Loading -> {
-                            state = state.copy(isLoading = result.isLoading)
+                            state = state.copy(
+                                isLoading = result.isLoading,
+                                error = null,
+                            )
                         }
                     }
 

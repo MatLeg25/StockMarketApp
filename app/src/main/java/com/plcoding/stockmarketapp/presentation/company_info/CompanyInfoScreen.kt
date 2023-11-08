@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.plcoding.stockmarketapp.ui.theme.DarkBlue
+import com.plcoding.stockmarketapp.util.ErrorInfo
 import com.ramcosta.composedestinations.annotation.Destination
 
 @Composable
@@ -86,28 +87,8 @@ fun CompanyInfoScreen(
                     modifier = Modifier.fillMaxWidth(),
                 )
                 if (state.errorIntradayInfo != null) {
-                    Column(
-                        modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                        Text(
-                            text = "Cannot fetch intraday info.",
-                            fontSize = 14.sp,
-                            color = MaterialTheme.colors.error,
-                            fontStyle = FontStyle.Italic,
-                            fontWeight = FontWeight.Light
-                        )
-                        Text(
-                            text = "Please try again later.",
-                            fontSize = 14.sp,
-                            color = MaterialTheme.colors.error,
-                            fontStyle = FontStyle.Italic,
-                            fontWeight = FontWeight.Light
-                        )
-                    }
-                }
-                else if (state.stockInfos.isNotEmpty()) {
+                    ErrorInfo(dataSource = "intraday info")
+                } else if (state.stockInfos.isNotEmpty()) {
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(text = "Market summary")
                     Spacer(modifier = Modifier.height(32.dp))
