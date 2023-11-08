@@ -1,16 +1,10 @@
 # StockMarketApp
+Project based on tutorial [https://www.youtube.com/watch?v=uLs2FxFSWU4].
 
-## App overview (video)
-[StockMarketApp-overview.webm](https://github.com/MatLeg25/StockMarketApp/assets/70913892/971568b2-9f4e-4a68-a10f-81227cb768a4)
+The app displays a list of company from USA market.
+On the details screen, the user can find more information about the selected company and the stock price from the last day.
 
-
-# CleanArchitectureNoteApp
-
-Project based on tutorial [https://www.youtube.com/watch?v=8YPXv7xKh2w].
-
-The app displays a list of notes and allows to perform CURD operations for each of them.
-The application allows user to sort notes by title, date and color. Once a note is deleted, the user can restore it by clicking on the snackbar.
-The app uses RoomDB to store data.
+Stock data is provided by API: https://www.alphavantage.co/
 
 ## Screenshots:
 - CompanyListings screen: <br />
@@ -19,12 +13,16 @@ The app uses RoomDB to store data.
 - CompanyInfo screen: <br />
 ![image](https://github.com/MatLeg25/StockMarketApp/assets/70913892/1225edc5-468e-4174-b9e6-c27e158b1fc3)
 
+## App overview (video)
+[StockMarketApp-overview.webm](https://github.com/MatLeg25/StockMarketApp/assets/70913892/971568b2-9f4e-4a68-a10f-81227cb768a4)
 
 ## Tech stack:
 - Android
-- Kotlin
+- Kotlin, Coroutines, Flow
 - MVVM
 - DI with Dagger-Hilt
 - RoomDB
+- Retrofit, Moshi, okhttp3
 - Jetpack Compose
-- Jetpack Navigation
+- Compose Navigation by [io.github.raamcosta.compose-destinations:core:1.1.2-beta]
+- OpenCSV
