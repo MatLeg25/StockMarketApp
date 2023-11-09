@@ -1,8 +1,9 @@
 # StockMarketApp
 Project based on tutorial [https://www.youtube.com/watch?v=uLs2FxFSWU4].
 
-The app displays a list of company from market. Stock data is provided by API: https://www.alphavantage.co/
-On the details screen, the user can find more information about the selected company and the stock price from the last working day.
+The app displays a list of company from market. Stock data is provided by API: https://www.alphavantage.co/ <br />
+On the details screen, the user can find more information about the selected company and the stock price from the last working day. <br />
+The app manages the cache using RoomDB.
 
 ## Screenshots:
 - CompanyListings screen: <br />
